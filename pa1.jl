@@ -1,7 +1,39 @@
 ### A Pluto.jl notebook ###
 # v0.18.1
 
-using Markdown
+begin
+    import Pkg
+    # activate a clean environment
+    Pkg.activate(mktempdir())
+
+    Pkg.add([
+        Pkg.PackageSpec(name="Plots"),
+        Pkg.PackageSpec(name="PlutoUI"),
+	Pkg.PackageSpec(name="Markdown"),
+	Pkg.PackageSpec(name="InteractiveUtils"),
+	Pkg.PackageSpec(name="Markdown"),
+	Pkg.PackageSpec(name="InteractiveUtils"),
+	Pkg.PackageSpec(name="CSV"),
+	Pkg.PackageSpec(name="DataFrames"),
+	Pkg.PackageSpec(name="RDatasets"),
+	Pkg.PackageSpec(name="StatsBase"),
+	Pkg.PackageSpec(name="Statistics"),
+	Pkg.PackageSpec(name="DelimitedFiles"),
+	Pkg.PackageSpec(name="Parameters: @with_kw"),
+	Pkg.PackageSpec(name="Flux"),
+	Pkg.PackageSpec(name="Flux: train!"),
+	Pkg.PackageSpec(name="Flux: gradient"),
+	Pkg.PackageSpec(name="Flux.Optimise: update!"),
+	Pkg.PackageSpec(name="Flux: onehotbatch, onecold, crossentropy"),
+	Pkg.PackageSpec(name="Flux: @epochs"),
+	
+        # ... keep adding your packages
+    ])
+
+    using Plots
+    using PlutoUI
+
+    using Markdown
 using InteractiveUtils
 
 # ╔═╡ b9f86ec0-b412-11ec-23eb-599d091d1c7e
@@ -54,6 +86,9 @@ using Flux: @epochs
 
 # ╔═╡ babd906d-9509-4cc3-a543-76e8ffdd4955
 using Plots
+
+    # ... place all usings and imports into this one cell
+end
 
 # ╔═╡ 32cbd8ea-328b-41aa-a996-05301d1f308a
 # loading data set
