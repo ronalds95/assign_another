@@ -4,7 +4,22 @@
 using Markdown
 using InteractiveUtils
 
-# This Pluto notebook uses @bind for interactivity. When running this notebook outside of Pluto, the following 'mock version' of @bind gives bound variables a default value (instead of an error).
+# ╔═╡ da22e027-2d62-4865-ac7a-3b34ede564e6
+using Pkg
+
+# ╔═╡ e09d7ad0-d3b2-11ec-2e16-a55460c81a7b
+using Markdown
+
+# ╔═╡ 3a7bb504-bee2-41bf-bd9d-73c0d455b55d
+using InteractiveUtils
+
+# ╔═╡ cd79415e-8b79-40e4-b675-76821014ed5d
+using PlutoUI
+
+# ╔═╡ 3385eae4-28d4-48df-95a1-24f28d153922
+using DataStructures
+
+# ╔═╡ 46dd7f03-c1a6-4ba8-b28f-7bfe39086513
 macro bind(def, element)
     quote
         local iv = try Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value catch; b -> missing; end
@@ -14,188 +29,100 @@ macro bind(def, element)
     end
 end
 
-# ╔═╡ 87f3abbe-c25a-11ec-15bd-1f981f9133af
-using Pkg
-
-# ╔═╡ fd1e543c-5221-43f8-b73e-b7b07e966124
-using Markdown
-
-# ╔═╡ dac5c3ae-1748-49df-b7c1-0218a70e692f
-using PlutoUI
-
-# ╔═╡ 95cba2b2-2214-41f5-b210-45af8e4df213
-using InteractiveUtils
-
-# ╔═╡ 03113e04-04e5-4ffb-b0f3-9b423bdb60fe
-using DataStructures
-
-# ╔═╡ 826a7b13-4855-4be8-89be-e4227077eb83
+# ╔═╡ dabf6e77-c88c-42bf-8e59-b7031762c5a7
 md"## State definitions "
 
-# ╔═╡ 83df0c73-ab75-4531-afa0-e52d7b803ef6
+# ╔═╡ 72bcbfdc-e97a-4c04-b31c-63dbfc3f474f
 struct State
 name::String
 position::Int64
 parcel::Vector{Bool}
 end
 
-# ╔═╡ caaa09ff-b814-434e-81b7-9b63449a9a69
+# ╔═╡ f0c19a24-14a9-4706-bf4a-93e245b5ba41
 md"## Action Definition "
 
-# ╔═╡ 26fb91fe-e9f5-437b-9daa-a92eb1779ccc
+# ╔═╡ 986a11c5-09f3-4d4a-b80b-3201a2971230
 struct Action
 name::String
 cost::Int64
 end
 
-# ╔═╡ e2580823-e2b4-43d1-b69c-6dbb2183dde3
+# ╔═╡ c84f8e87-6c7d-4982-8f05-1fc44877cbf7
 A1 = Action("Left", 2)
 
-# ╔═╡ dcac604c-05eb-4340-9a68-64a5c881837a
+# ╔═╡ cd35acf5-b952-46fc-8110-07fea910f9d5
 A2 = Action("Right", 2)
 
-# ╔═╡ b27d1573-38f1-43b7-bbb9-1cd969277a80
+# ╔═╡ 7b249c6e-31b7-4a2b-a4ed-e7c7abc828db
 A3 = Action("Move_Up", 1)
 
-# ╔═╡ ad016653-a55b-4255-8314-4135026ac97c
+# ╔═╡ 045a705a-8117-472f-9e05-4d1499850532
 A4 = Action("Move_Down", 1)
 
-# ╔═╡ b9760f58-085e-4ee0-8af4-515aae93c985
+# ╔═╡ e6b53d64-a611-4945-9c65-7f7a3d6fcfce
 A5 = Action("Collect", 5)
 
-# ╔═╡ 65f71313-d001-4407-a310-988b26d4e7fe
-#States
+# ╔═╡ 001d6304-48e1-4b16-9ab9-ddb9464fca28
+"md States"
 
-# ╔═╡ ffef00f8-5981-42a5-89b1-64e74fc2b04d
-S1 = State("State one", 1, [true, false, true])
+# ╔═╡ fbca9fe1-d930-46c4-b54d-21d0591752b1
+S1 = State("State one", 1, [true, true, true])
 
-# ╔═╡ 34935674-ada4-4b00-b124-542e0fca0940
-S2 = State("State two", 2, [true, true, false])
+# ╔═╡ 01c5ac00-d47d-47ab-8b47-e7da44e4c147
+S2 = State("State two", 2, [true, true, true])
 
-# ╔═╡ fec8ddb6-52da-4329-98c1-7afe0a843d32
-S3 = State("State three", 3, [false, true, true])
+# ╔═╡ 5f46b7f1-8177-4bec-b191-46b39f2fe837
+S3 = State("State three", 3, [true, true, true])
 
-# ╔═╡ 2c9c8b9b-902a-4c20-b5db-13ea042c1a20
-S4 = State("State four", 4, [false, true, true])
+# ╔═╡ d005bf2b-f317-486d-b842-14a7c9ef5ba2
+S4 = State("State four", 1, [false, true, true])
 
-# ╔═╡ e52375ae-c6c6-4ee9-b0b4-40c49006a5d7
-S5 = State("State five", 5, [true, false, true])
+# ╔═╡ b7867da5-da37-49da-9884-06c160f9822d
+S5 = State("State five", 2, [false, true, true])
 
-# ╔═╡ 67d0c50b-3562-4a09-96af-af151460a624
-S6 = State("State six", 1, [false, true, true])
+# ╔═╡ 95b35f04-45fa-41ce-a83d-0f8c22bf468a
+S6 = State("State six", 3, [false, true, true])
 
-# ╔═╡ 8eb2762c-f866-4a59-9732-3766da33a401
-S7 = State("State seven", 2, [false, false, true])
+# ╔═╡ d2ce109e-e2e2-4f91-9c4d-54431e0be210
+S7 = State("State seven", 3, [false, false, false])
 
-# ╔═╡ dd12660a-e726-4608-a36f-f0e97cae59e5
-S8 = State("State eight", 3, [false, false,true])
-
-# ╔═╡ 8f30d9b3-dc2b-4be9-8f60-e93f57ab940f
-S9 = State("State nine", 4, [false, false, true])
-
-# ╔═╡ 220c721c-2e39-487b-942b-601980d67b7d
-S10 = State("State ten", 5, [false, false, false])
-
-# ╔═╡ 9b2fd80d-b1c5-48e7-be28-3ba45a77b220
+# ╔═╡ 562a4b16-ea90-4460-80c7-d5a8dfd8a37d
 md"## Create transition model"
 
-# ╔═╡ 1dc2b83c-2c7d-4b32-bf16-392b52c66e35
+# ╔═╡ 78a7e766-e56d-4a2f-a109-03260cf445ce
 Transition_Mod = Dict()
 
-# ╔═╡ b481ea6d-2f78-47fe-85fc-1ca28780c657
-md"### Add a mapping/push! to the transition Model"
+# ╔═╡ d4d6bb93-0dc4-4b0f-bf9b-753df45cbf49
+push!(Transition_Mod, S1 => [(A2, S2), (A1, S1), (A3, S4)])
 
-# ╔═╡ dd9c04bf-3c72-4f31-a7bb-422f2d2b013f
-push!(Transition_Mod, S1 => [(A2, S2), (A3, S4), (A4, S7), (A5, S1)])
+# ╔═╡ 088a2793-716a-4d66-bff2-98a2816d7b5a
+push!(Transition_Mod, S2 => [(A2, S3), (A1, S1)])
 
-# ╔═╡ 56d286f0-1778-4390-84f1-f578c884f124
-push!(Transition_Mod, S2 => [(A1, S10), (A2, S3), (A3, S5), (A4, S8), (A5, S2)])
+# ╔═╡ d1af5ab6-5711-42c4-9486-4a15adabc2c2
+push!(Transition_Mod, S3 => [(A2, S3), (A1, S2)])
 
-# ╔═╡ d91d4039-1db4-492b-95bd-3e8856ecd1fa
-push!(Transition_Mod, S3 => [(A1, S2), (A3, S6), (A4, S11), (A5, S3)])
+# ╔═╡ 0bf6976f-a1e3-4211-a027-2d792dbcf9bf
+push!(Transition_Mod, S4 => [(A1, S4), (A2, S5)])
 
-# ╔═╡ c50fe39f-1a90-4b48-83de-8a940f645712
-push!(Transition_Mod, S4 => [(A2, S5), (A4, S9), (A5, S4)])
+# ╔═╡ 55c0dfe4-15cf-4ad3-9296-e4472bb5466f
+push!(Transition_Mod, S5 => [(A1, S4), (A2, S6)])
 
-# ╔═╡ 742a1980-f218-455c-9765-b6172d9171f1
-push!(Transition_Mod, S5 => [(A1, S4), (A2, S6), (A4, S8), (A5, S5)])
+# ╔═╡ e77e54ee-1f04-4457-bbe3-fefa5cbde80d
+push!(Transition_Mod, S6 => [(A1, S5), (A2, S6), (A3, S7)])
 
-# ╔═╡ dc612fbc-3277-41bf-a8a9-cdbb54a1bddb
-push!(Transition_Mod, S6 => [(A1, S5), (A2, S6), (A3, S7), (A3, S7)])
+# ╔═╡ dd20a371-0058-4dfb-ad98-634ec5318efd
+push!(Transition_Mod, S7 => [(A1, S5), (A2, S6), (A5, S7)])
 
-# ╔═╡ 26ec5f52-31b3-4c58-adab-532598c643f9
-push!(Transition_Mod, S7 => [(A2, S8), (A3, S4), (A5, S7)])
-
-# ╔═╡ 069c17bb-73bf-43a1-931e-f03563f4c163
-push!(Transition_Mod, S8 => [(A1, S7), (A2, S12), (A3, S5), (A5, S8)])
-
-# ╔═╡ 9fd5f861-e135-4951-88af-ce6d22edbcd5
-push!(Transition_Mod, S9 => [(A2, S12), (A2, S8), (A3, S4), (A5, S9)])
-
-# ╔═╡ ffb2a9a4-9594-4c61-9a36-dfb104a5bde5
-push!(Transition_Mod, S10 => [(A2, S2), (A3, S4), (A4, S7), (A5, S10)])
-
-# ╔═╡ a4d99d12-9e16-4be5-b3cd-4745756e1b49
-push!(Transition_Mod, S11 => [(A1, S7), (A3, S6), (A5, S11)])
-
-# ╔═╡ 255ccd7f-48cd-4779-9603-d813c9b801ed
-push!(Transition_Mod, S12 => [(A1, S7), (A2, S6), (A5, S12)])
-
-# ╔═╡ 0847766e-75cb-42c4-8159-33c7f8c75c45
-
-
-# ╔═╡ 2ff91068-ddbd-4943-9a5e-5c040386d2b1
+# ╔═╡ df0cd65e-1a4d-4cb3-9690-8813a853dd3b
 Transition_Mod
 
-# ╔═╡ be305fcb-d0ce-4808-b272-7f07ba238c38
-#Promptint user to enter data
-
-# ╔═╡ 3ffe4113-84a2-4795-80c9-6c9639a3c650
-@bind storeys TextField()
-
-# ╔═╡ e271a880-ffc5-4c4e-955b-4f41477d55c5
-with_terminal() do
-	println( storeys)
-end
-
-# ╔═╡ ae2e4468-af41-4255-9635-e35a99b0e3da
-@bind offices TextField()
-
-# ╔═╡ 28014a9e-a114-4dc5-95e1-240b7bbbfa23
-with_terminal() do
-	println( offices)
-end
-
-# ╔═╡ 0bd5e8ad-80a5-4141-add3-c0d68ed64ee3
-@bind parcels TextField()
-
-# ╔═╡ 4a057678-f23d-4c6d-813f-d79a79183e21
-with_terminal() do
-	println(parcels)
-end
-
-# ╔═╡ f841c19d-b4e1-420d-a2cb-6d4688e9d9de
-@bind location TextField()
-
-# ╔═╡ 5b1d154d-38a3-46ea-9d4d-24944acbcc0c
-with_terminal() do
-	println( location)
-end
-
-# ╔═╡ 460c77be-7707-488a-8aa2-e954875a835c
-# Our Goal State
-
-# ╔═╡ 2e6d029e-b34e-45cd-958f-32a9c3e72665
-with_terminal() do
-	println( S10)
-end
-
-# ╔═╡ 8c34dd78-4fa7-40ed-896a-2e9ba6ee0834
+# ╔═╡ a04f9ad1-c84a-47a1-98af-48c0798ddb7f
 function heuristic(S1, goalState)
     return distance(S1[1] - goalState[1]) + distance(cell[2] - goalState[2])
 end
 
-# ╔═╡ 21a2eb16-1eb7-4f2d-93db-b1e7c9baa821
+# ╔═╡ 200b9264-8e75-4a81-b9c3-688da0db940e
 function A_Star_Search(TransModel,initialState, goalState)
 	
     result = []
@@ -227,7 +154,7 @@ function A_Star_Search(TransModel,initialState, goalState)
 	end
 end
 
-# ╔═╡ 0fed6f60-0499-475f-9380-f9df806f62f6
+# ╔═╡ 4bbeb8e3-a395-4ad4-aadd-24afa4c75316
 function create_result(TransModel, ancestors, initialState, goalState)
 	result = []
 	visitor = goalState
@@ -247,7 +174,7 @@ function create_result(TransModel, ancestors, initialState, goalState)
 	return result
 end
 
-# ╔═╡ f89d2b1d-3176-4394-9c94-060c0966e4a2
+# ╔═╡ a12c9086-25f0-4bc9-b775-228d2373a3e1
 function search(initialState, transition_dict, is_goal,all_candidates,
 add_candidate, remove_candidate)
 	visited = []
@@ -261,7 +188,7 @@ add_candidate, remove_candidate)
 			(t1, t2) = remove_candidate(the_candidates)
 			current_state = t1
 			the_candidates = t2
-#proceed with handling the current state
+
 			push!(visited, current_state)
 			candidates = transition_dict[current_state]
 			for single_candidate in candidates
@@ -280,41 +207,86 @@ single_candidate[2], single_candidate[1].cost)
 		end
 end
 
-# ╔═╡ 396710e9-ae49-41e5-a09f-4ee022840474
+# ╔═╡ c49c0999-7cf5-493c-978a-b3d2a079d121
 function goal_test(currentState::State)
     return ! (currentState.parcel[1] || currentState.parcel[2])
 end
 
-# ╔═╡ d4d62052-a475-46e9-b657-1a5b0b95724a
+# ╔═╡ df2f5d9a-24f5-4777-8fde-c251c925078b
 function add_to_queue(queue::Queue{State}, state::State, cost::Int64)
     enqueue!(queue, state)
     return queue
 end
 
-# ╔═╡ f00c2df6-9d0c-4c78-9095-3e41b2193587
+# ╔═╡ 01b73655-0cfc-4421-8e20-d919a4fbcdf2
 function add_to_stack(stack::Stack{State}, state::State, cost::Int64)
     push!(stack, state)
     return stack
 end
 
-# ╔═╡ 95dd3903-b7c4-403f-8bd5-34df3ab775ec
+# ╔═╡ 1ea81f66-cd09-4b78-9957-7018022656d4
 function remove_from_queue(queue::Queue{State})
     removed = dequeue!(queue)
     return (removed, queue)
 end
 
-# ╔═╡ 4cbf47cd-7e14-4743-aecf-416e5d505416
+# ╔═╡ 3ae33b6f-c19f-4c77-a3e0-2717deb65595
 function remove_from_stack(stack::Stack{State})
     removed = pop!(stack)
     return (removed, stack)
 end
 
-# ╔═╡ d0b3f97b-d7bc-4af2-a23f-615010df6ab7
-# Calling A Star Search Strategy
+# ╔═╡ 5fcf2e81-ce42-4eeb-973a-777a5728067d
+"#md Calling A Star Search"
 
-# ╔═╡ d553b134-51c6-403b-8415-e85c454871f5
+# ╔═╡ 8ff45816-be9d-4846-ba82-3173ced5adfc
 search(S1, Transition_Mod, goal_test, Stack{State}(), add_to_stack,
 remove_from_stack)
+
+# ╔═╡ 076d6d2f-1c74-4d27-93c1-dd22c023b6e7
+
+
+# ╔═╡ c9e84510-b151-4559-8420-36b8ab1081f5
+
+
+# ╔═╡ d71338b3-31e1-40f6-b620-d72bb94619b4
+
+
+# ╔═╡ 9166fe56-77d9-4a7d-9939-5e7bdaaa2bfe
+
+
+# ╔═╡ 18d618c0-00dd-4ae3-a5f9-4c9d68fec587
+
+
+# ╔═╡ 72e248f1-6192-4bea-8abd-07b935302781
+
+
+# ╔═╡ 840ab735-b4a8-4046-b5b8-6946a4fb8758
+
+
+# ╔═╡ 0f8ad1ef-4e11-48a6-89b9-e3386f214a1f
+
+
+# ╔═╡ ebc38a58-5ee4-4478-b024-87a8dd7e2e55
+
+
+# ╔═╡ 7568085e-1c00-4447-a1ca-939990478922
+
+
+# ╔═╡ 0286ee0f-da86-4ff3-9ea3-35b6da945677
+
+
+# ╔═╡ c2afd294-6faa-4d93-8188-14b14d59f7bc
+
+
+# ╔═╡ c23b6333-b0bc-4dd3-afac-f160ef7a8074
+
+
+# ╔═╡ fcb42e7d-e82a-4334-8189-ee6afcf077d1
+
+
+# ╔═╡ 2727d07a-abb4-44f4-88aa-7d2d950e5384
+
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -326,7 +298,7 @@ Pkg = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
 PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
 
 [compat]
-DataStructures = "~0.18.11"
+DataStructures = "~0.18.12"
 PlutoUI = "~0.7.38"
 """
 
@@ -354,9 +326,9 @@ uuid = "2a0f44e3-6c83-55bd-87e4-b1978d98bd5f"
 
 [[deps.ColorTypes]]
 deps = ["FixedPointNumbers", "Random"]
-git-tree-sha1 = "024fe24d83e4a5bf5fc80501a314ce0d1aa35597"
+git-tree-sha1 = "63d1e802de0c4882c00aee5cb16f9dd4d6d7c59c"
 uuid = "3da002f7-5984-5a60-b8a6-cbb66c0b333f"
-version = "0.11.0"
+version = "0.11.1"
 
 [[deps.Compat]]
 deps = ["Base64", "Dates", "DelimitedFiles", "Distributed", "InteractiveUtils", "LibGit2", "Libdl", "LinearAlgebra", "Markdown", "Mmap", "Pkg", "Printf", "REPL", "Random", "SHA", "Serialization", "SharedArrays", "Sockets", "SparseArrays", "Statistics", "Test", "UUIDs", "Unicode"]
@@ -370,9 +342,9 @@ uuid = "e66e0078-7015-5450-92f7-15fbd957f2ae"
 
 [[deps.DataStructures]]
 deps = ["Compat", "InteractiveUtils", "OrderedCollections"]
-git-tree-sha1 = "3daef5523dd2e769dad2365274f760ff5f282c7d"
+git-tree-sha1 = "cc1a8e22627f33c789ab60b36a9132ac050bbf75"
 uuid = "864edb3b-99cc-5e75-8d2d-829cb0a9cfe8"
-version = "0.18.11"
+version = "0.18.12"
 
 [[deps.Dates]]
 deps = ["Printf"]
@@ -403,9 +375,10 @@ uuid = "47d2ed2b-36de-50cf-bf87-49c2cf4b8b91"
 version = "0.0.4"
 
 [[deps.HypertextLiteral]]
-git-tree-sha1 = "2b078b5a615c6c0396c77810d92ee8c6f470d238"
+deps = ["Tricks"]
+git-tree-sha1 = "c47c5fa4c5308f27ccaac35504858d8914e102f9"
 uuid = "ac1192a8-f4b3-4bfe-ba22-af5b92cd3ab2"
-version = "0.9.3"
+version = "0.9.4"
 
 [[deps.IOCapture]]
 deps = ["Logging", "Random"]
@@ -477,9 +450,9 @@ version = "1.4.1"
 
 [[deps.Parsers]]
 deps = ["Dates"]
-git-tree-sha1 = "3b429f37de37f1fc603cc1de4a799dc7fbe4c0b6"
+git-tree-sha1 = "1285416549ccfcdf0c50d4997a94331e88d68413"
 uuid = "69de0a69-1ddd-5017-9359-2bf0b02dc9f0"
-version = "2.3.0"
+version = "2.3.1"
 
 [[deps.Pkg]]
 deps = ["Artifacts", "Dates", "Downloads", "LibGit2", "Libdl", "Logging", "Markdown", "Printf", "REPL", "Random", "SHA", "Serialization", "TOML", "Tar", "UUIDs", "p7zip_jll"]
@@ -541,6 +514,11 @@ uuid = "a4e569a6-e804-4fa4-b0f3-eef7a1d5b13e"
 deps = ["InteractiveUtils", "Logging", "Random", "Serialization"]
 uuid = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
+[[deps.Tricks]]
+git-tree-sha1 = "6bac775f2d42a611cdfcd1fb217ee719630c4175"
+uuid = "410a4b4d-49e4-4fbc-ab6d-cb71b17b3775"
+version = "0.1.6"
+
 [[deps.UUIDs]]
 deps = ["Random", "SHA"]
 uuid = "cf7118a7-6976-5b1a-9a39-7adc72f591a4"
@@ -566,69 +544,64 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 """
 
 # ╔═╡ Cell order:
-# ╠═87f3abbe-c25a-11ec-15bd-1f981f9133af
-# ╠═fd1e543c-5221-43f8-b73e-b7b07e966124
-# ╠═dac5c3ae-1748-49df-b7c1-0218a70e692f
-# ╠═95cba2b2-2214-41f5-b210-45af8e4df213
-# ╠═03113e04-04e5-4ffb-b0f3-9b423bdb60fe
-# ╠═826a7b13-4855-4be8-89be-e4227077eb83
-# ╠═83df0c73-ab75-4531-afa0-e52d7b803ef6
-# ╠═caaa09ff-b814-434e-81b7-9b63449a9a69
-# ╠═26fb91fe-e9f5-437b-9daa-a92eb1779ccc
-# ╠═e2580823-e2b4-43d1-b69c-6dbb2183dde3
-# ╠═dcac604c-05eb-4340-9a68-64a5c881837a
-# ╠═b27d1573-38f1-43b7-bbb9-1cd969277a80
-# ╠═ad016653-a55b-4255-8314-4135026ac97c
-# ╠═b9760f58-085e-4ee0-8af4-515aae93c985
-# ╠═65f71313-d001-4407-a310-988b26d4e7fe
-# ╠═ffef00f8-5981-42a5-89b1-64e74fc2b04d
-# ╠═34935674-ada4-4b00-b124-542e0fca0940
-# ╠═fec8ddb6-52da-4329-98c1-7afe0a843d32
-# ╠═2c9c8b9b-902a-4c20-b5db-13ea042c1a20
-# ╠═e52375ae-c6c6-4ee9-b0b4-40c49006a5d7
-# ╠═67d0c50b-3562-4a09-96af-af151460a624
-# ╠═8eb2762c-f866-4a59-9732-3766da33a401
-# ╠═dd12660a-e726-4608-a36f-f0e97cae59e5
-# ╠═8f30d9b3-dc2b-4be9-8f60-e93f57ab940f
-# ╠═220c721c-2e39-487b-942b-601980d67b7d
-# ╠═9b2fd80d-b1c5-48e7-be28-3ba45a77b220
-# ╠═1dc2b83c-2c7d-4b32-bf16-392b52c66e35
-# ╠═b481ea6d-2f78-47fe-85fc-1ca28780c657
-# ╠═dd9c04bf-3c72-4f31-a7bb-422f2d2b013f
-# ╠═56d286f0-1778-4390-84f1-f578c884f124
-# ╠═d91d4039-1db4-492b-95bd-3e8856ecd1fa
-# ╠═c50fe39f-1a90-4b48-83de-8a940f645712
-# ╠═742a1980-f218-455c-9765-b6172d9171f1
-# ╠═dc612fbc-3277-41bf-a8a9-cdbb54a1bddb
-# ╠═26ec5f52-31b3-4c58-adab-532598c643f9
-# ╠═069c17bb-73bf-43a1-931e-f03563f4c163
-# ╠═9fd5f861-e135-4951-88af-ce6d22edbcd5
-# ╠═ffb2a9a4-9594-4c61-9a36-dfb104a5bde5
-# ╠═a4d99d12-9e16-4be5-b3cd-4745756e1b49
-# ╠═255ccd7f-48cd-4779-9603-d813c9b801ed
-# ╟─0847766e-75cb-42c4-8159-33c7f8c75c45
-# ╠═2ff91068-ddbd-4943-9a5e-5c040386d2b1
-# ╠═be305fcb-d0ce-4808-b272-7f07ba238c38
-# ╠═3ffe4113-84a2-4795-80c9-6c9639a3c650
-# ╠═e271a880-ffc5-4c4e-955b-4f41477d55c5
-# ╠═ae2e4468-af41-4255-9635-e35a99b0e3da
-# ╠═28014a9e-a114-4dc5-95e1-240b7bbbfa23
-# ╠═0bd5e8ad-80a5-4141-add3-c0d68ed64ee3
-# ╠═4a057678-f23d-4c6d-813f-d79a79183e21
-# ╠═f841c19d-b4e1-420d-a2cb-6d4688e9d9de
-# ╠═5b1d154d-38a3-46ea-9d4d-24944acbcc0c
-# ╠═460c77be-7707-488a-8aa2-e954875a835c
-# ╠═2e6d029e-b34e-45cd-958f-32a9c3e72665
-# ╠═8c34dd78-4fa7-40ed-896a-2e9ba6ee0834
-# ╠═21a2eb16-1eb7-4f2d-93db-b1e7c9baa821
-# ╠═0fed6f60-0499-475f-9380-f9df806f62f6
-# ╠═f89d2b1d-3176-4394-9c94-060c0966e4a2
-# ╠═396710e9-ae49-41e5-a09f-4ee022840474
-# ╠═d4d62052-a475-46e9-b657-1a5b0b95724a
-# ╠═f00c2df6-9d0c-4c78-9095-3e41b2193587
-# ╠═95dd3903-b7c4-403f-8bd5-34df3ab775ec
-# ╠═4cbf47cd-7e14-4743-aecf-416e5d505416
-# ╠═d0b3f97b-d7bc-4af2-a23f-615010df6ab7
-# ╠═d553b134-51c6-403b-8415-e85c454871f5
+# ╠═e09d7ad0-d3b2-11ec-2e16-a55460c81a7b
+# ╠═3a7bb504-bee2-41bf-bd9d-73c0d455b55d
+# ╠═da22e027-2d62-4865-ac7a-3b34ede564e6
+# ╠═cd79415e-8b79-40e4-b675-76821014ed5d
+# ╠═3385eae4-28d4-48df-95a1-24f28d153922
+# ╠═46dd7f03-c1a6-4ba8-b28f-7bfe39086513
+# ╠═dabf6e77-c88c-42bf-8e59-b7031762c5a7
+# ╠═72bcbfdc-e97a-4c04-b31c-63dbfc3f474f
+# ╠═f0c19a24-14a9-4706-bf4a-93e245b5ba41
+# ╠═986a11c5-09f3-4d4a-b80b-3201a2971230
+# ╠═c84f8e87-6c7d-4982-8f05-1fc44877cbf7
+# ╠═cd35acf5-b952-46fc-8110-07fea910f9d5
+# ╠═7b249c6e-31b7-4a2b-a4ed-e7c7abc828db
+# ╠═045a705a-8117-472f-9e05-4d1499850532
+# ╠═e6b53d64-a611-4945-9c65-7f7a3d6fcfce
+# ╠═001d6304-48e1-4b16-9ab9-ddb9464fca28
+# ╠═fbca9fe1-d930-46c4-b54d-21d0591752b1
+# ╠═01c5ac00-d47d-47ab-8b47-e7da44e4c147
+# ╠═5f46b7f1-8177-4bec-b191-46b39f2fe837
+# ╠═d005bf2b-f317-486d-b842-14a7c9ef5ba2
+# ╠═b7867da5-da37-49da-9884-06c160f9822d
+# ╠═95b35f04-45fa-41ce-a83d-0f8c22bf468a
+# ╠═d2ce109e-e2e2-4f91-9c4d-54431e0be210
+# ╠═562a4b16-ea90-4460-80c7-d5a8dfd8a37d
+# ╠═78a7e766-e56d-4a2f-a109-03260cf445ce
+# ╠═d4d6bb93-0dc4-4b0f-bf9b-753df45cbf49
+# ╠═088a2793-716a-4d66-bff2-98a2816d7b5a
+# ╠═d1af5ab6-5711-42c4-9486-4a15adabc2c2
+# ╠═0bf6976f-a1e3-4211-a027-2d792dbcf9bf
+# ╠═55c0dfe4-15cf-4ad3-9296-e4472bb5466f
+# ╠═e77e54ee-1f04-4457-bbe3-fefa5cbde80d
+# ╠═dd20a371-0058-4dfb-ad98-634ec5318efd
+# ╠═df0cd65e-1a4d-4cb3-9690-8813a853dd3b
+# ╠═a04f9ad1-c84a-47a1-98af-48c0798ddb7f
+# ╠═200b9264-8e75-4a81-b9c3-688da0db940e
+# ╠═4bbeb8e3-a395-4ad4-aadd-24afa4c75316
+# ╠═a12c9086-25f0-4bc9-b775-228d2373a3e1
+# ╠═c49c0999-7cf5-493c-978a-b3d2a079d121
+# ╠═df2f5d9a-24f5-4777-8fde-c251c925078b
+# ╠═01b73655-0cfc-4421-8e20-d919a4fbcdf2
+# ╠═1ea81f66-cd09-4b78-9957-7018022656d4
+# ╠═3ae33b6f-c19f-4c77-a3e0-2717deb65595
+# ╠═5fcf2e81-ce42-4eeb-973a-777a5728067d
+# ╠═8ff45816-be9d-4846-ba82-3173ced5adfc
+# ╠═076d6d2f-1c74-4d27-93c1-dd22c023b6e7
+# ╠═c9e84510-b151-4559-8420-36b8ab1081f5
+# ╠═d71338b3-31e1-40f6-b620-d72bb94619b4
+# ╠═9166fe56-77d9-4a7d-9939-5e7bdaaa2bfe
+# ╠═18d618c0-00dd-4ae3-a5f9-4c9d68fec587
+# ╠═72e248f1-6192-4bea-8abd-07b935302781
+# ╠═840ab735-b4a8-4046-b5b8-6946a4fb8758
+# ╠═0f8ad1ef-4e11-48a6-89b9-e3386f214a1f
+# ╠═ebc38a58-5ee4-4478-b024-87a8dd7e2e55
+# ╠═7568085e-1c00-4447-a1ca-939990478922
+# ╠═0286ee0f-da86-4ff3-9ea3-35b6da945677
+# ╠═c2afd294-6faa-4d93-8188-14b14d59f7bc
+# ╠═c23b6333-b0bc-4dd3-afac-f160ef7a8074
+# ╠═fcb42e7d-e82a-4334-8189-ee6afcf077d1
+# ╠═2727d07a-abb4-44f4-88aa-7d2d950e5384
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
