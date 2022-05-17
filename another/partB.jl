@@ -49,55 +49,61 @@ cost::Int64
 end
 
 # ╔═╡ e2580823-e2b4-43d1-b69c-6dbb2183dde3
-A1 = Action("MW", 2)
+A1 = Action("Left", 2)
 
 # ╔═╡ dcac604c-05eb-4340-9a68-64a5c881837a
-A2 = Action("ME", 2)
+A2 = Action("Right", 2)
 
 # ╔═╡ b27d1573-38f1-43b7-bbb9-1cd969277a80
-A3 = Action("MU", 1)
+A3 = Action("Move_Up", 1)
 
 # ╔═╡ ad016653-a55b-4255-8314-4135026ac97c
-A4 = Action("MD", 1)
+A4 = Action("Move_Down", 1)
 
 # ╔═╡ b9760f58-085e-4ee0-8af4-515aae93c985
-A5 = Action("CO", 5)
+A5 = Action("Collect", 5)
+
+# ╔═╡ fae64717-d29f-40c7-8f69-4e2eefe9a14f
+"md States"
 
 # ╔═╡ 136cdabb-ca8f-48a6-afd5-b909f9cb1501
-S1 = State("State one", 1, [false, true, true, true,true])
+S1 = State("State one", 1, [true, true, true])
 
 # ╔═╡ 7e69f173-135d-4fed-9774-b24e712ffac3
-S2 = State("State two", 2, [true, true, true, true, true])
+S2 = State("State two", 2, [true, true, true])
 
 # ╔═╡ 19106858-f556-4ae9-b83f-848acdbdedbc
-S3 = State("State three", 3, [true, false, true, true, true])
+S3 = State("State three", 3, [true, true, true])
 
 # ╔═╡ bb2d4b4a-defe-4d2e-9576-dde120719fa0
-S4 = State("State four", 1, [false, true, false, true, true])
+S4 = State("State four", 1, [false, true, true])
 
 # ╔═╡ 6c8997ec-5852-4540-90d1-cd55e7cf2f62
-S5 = State("State five", 2, [true, true, false, true, true])
+S5 = State("State five", 2, [false, true, true])
 
 # ╔═╡ d8ae2103-fce8-4d83-942c-d22eef4fb6c1
-S6 = State("State six", 3, [true, false, false, true, true])
+S6 = State("State six", 3, [false, true, true])
 
 # ╔═╡ 2f5f3d02-99b2-4eb6-8295-503ca76bd01e
-S7 = State("State seven", 1, [false, true, true, false, true])
+S7 = State("State seven", 1, [true, false, true])
 
 # ╔═╡ a48b911d-8324-4d02-8754-e0f64b328daf
-S8 = State("State eight", 2, [true, true, true, false, true])
+S8 = State("State eight", 2, [true, false, true])
 
 # ╔═╡ 701a57ec-be39-4407-b316-03b0b4b02a49
-S9 = State("State nine", 3, [false, true, true, false, true])
+S9 = State("State nine", 3, [true, false, true])
 
 # ╔═╡ 3590b63a-4d59-465b-900b-475f6f44517c
-S10 = State("State ten", 3, [false, true, true, true, true])
+S10 = State("State ten", 1, [true, true, false])
 
 # ╔═╡ fc9e7bdc-55d8-4ca7-9bda-cb5198ad66fd
-S11 = State("State eleven", 3, [true, false, true, false, true])
+S11 = State("State eleven", 2, [true, true, false])
 
 # ╔═╡ 00ee3fdd-fb32-495a-9109-cf537eae6cdd
-S12 = State("State twelve", 3, [false, false, false, false, false])
+S12 = State("State twelve", 3, [true, true, false])
+
+# ╔═╡ 696c2d10-a20f-423a-b4dc-5ea7c283033c
+S13 = State("State thirteen", 3, [false, false, false])
 
 # ╔═╡ 9b2fd80d-b1c5-48e7-be28-3ba45a77b220
 #transition model
@@ -109,10 +115,10 @@ Transition_Mod = Dict()
 # Add a mapping/push! to the transition Model
 
 # ╔═╡ c5a78536-1c2f-45d4-8131-33162e08ebbe
-push!(Transition_Mod, S1 => [(A2, S2), (A3, S4), (A4, S7), (A5, S1)])
+push!(Transition_Mod, S1 => [(A5, S4), (A2, S1), (A5, S7), (A5, S10), (A3, S2), (A4, S3)])
 
 # ╔═╡ 21012f61-9750-41ff-a025-795df206d537
-push!(Transition_Mod, S2 => [(A1, S10), (A2, S3), (A3, S5), (A4, S8), (A5, S2)])
+push!(Transition_Mod, S2 => [(A5, S5), (A2, S2), (A5, S8), (A2, S2), (A3, S2), (A4, S3)]) #continue here
 
 # ╔═╡ 1108a71b-7d2c-4031-8937-0d407e5d1619
 push!(Transition_Mod, S3 => [(A1, S2), (A3, S6), (A4, S11), (A5, S3)])
@@ -163,7 +169,7 @@ end
 
 # ╔═╡ 28014a9e-a114-4dc5-95e1-240b7bbbfa23
 with_terminal() do
-	println( no_off_offices)
+	println(no_off_offices)
 end
 
 # ╔═╡ 0bd5e8ad-80a5-4141-add3-c0d68ed64ee3
@@ -174,12 +180,25 @@ with_terminal() do
 	println(parcels)
 end
 
+# ╔═╡ 665f6535-edb2-44f5-8631-8b44da8edbbd
+@bind location TextField()
+
+# ╔═╡ 549ab0f7-7071-4535-8554-3422504fc7cb
+with_terminal() do
+	println( location)
+end
+
 # ╔═╡ 460c77be-7707-488a-8aa2-e954875a835c
 # Our Goal State
 
 # ╔═╡ 2e6d029e-b34e-45cd-958f-32a9c3e72665
 with_terminal() do
 	println(S12)
+end
+
+# ╔═╡ 07e709d0-ae83-413f-96d8-5e10500017b7
+function heuristic(S1, goalState)
+    return distance(S1[1] - goalState[1]) + distance(cell[2] - goalState[2])
 end
 
 # ╔═╡ 21a2eb16-1eb7-4f2d-93db-b1e7c9baa821
@@ -267,6 +286,11 @@ single_candidate[2], single_candidate[1].cost)
 		end
 end
 
+# ╔═╡ 831cd8bf-32b9-4ebb-a3a4-7ae627715e98
+function goal_test(currentState::State)
+    return ! (currentState.parcel[1] || currentState.parcel[2])
+end
+
 # ╔═╡ d4d62052-a475-46e9-b657-1a5b0b95724a
 function add_to_queue(queue::Queue{State}, state::State, cost::Int64)
     enqueue!(queue, state)
@@ -291,16 +315,12 @@ function remove_from_stack(stack::Stack{State})
     return (removed, stack)
 end
 
-# ╔═╡ 396710e9-ae49-41e5-a09f-4ee022840474
-function goal_test(currentState::State)
-    return ! (currentState.parcel[1] || currentState.parcel[2])
-end
-
 # ╔═╡ d0b3f97b-d7bc-4af2-a23f-615010df6ab7
 # Calling A Star Search Strategy
 
-# ╔═╡ d553b134-51c6-403b-8415-e85c454871f5
-search(S1, Transition_Mod, goal_test, Queue{State}(), add_to_queue, remove_from_queue)
+# ╔═╡ c60a063e-87fc-4744-ac51-cf5a157957b5
+search(S1, Transition_Mod, goal_test, Stack{State}(), add_to_stack,
+remove_from_stack)
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -566,6 +586,7 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╠═b27d1573-38f1-43b7-bbb9-1cd969277a80
 # ╠═ad016653-a55b-4255-8314-4135026ac97c
 # ╠═b9760f58-085e-4ee0-8af4-515aae93c985
+# ╠═fae64717-d29f-40c7-8f69-4e2eefe9a14f
 # ╠═136cdabb-ca8f-48a6-afd5-b909f9cb1501
 # ╠═7e69f173-135d-4fed-9774-b24e712ffac3
 # ╠═19106858-f556-4ae9-b83f-848acdbdedbc
@@ -578,6 +599,7 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╠═3590b63a-4d59-465b-900b-475f6f44517c
 # ╠═fc9e7bdc-55d8-4ca7-9bda-cb5198ad66fd
 # ╠═00ee3fdd-fb32-495a-9109-cf537eae6cdd
+# ╠═696c2d10-a20f-423a-b4dc-5ea7c283033c
 # ╠═9b2fd80d-b1c5-48e7-be28-3ba45a77b220
 # ╠═1dc2b83c-2c7d-4b32-bf16-392b52c66e35
 # ╠═b481ea6d-2f78-47fe-85fc-1ca28780c657
@@ -601,17 +623,20 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╠═28014a9e-a114-4dc5-95e1-240b7bbbfa23
 # ╠═0bd5e8ad-80a5-4141-add3-c0d68ed64ee3
 # ╠═4a057678-f23d-4c6d-813f-d79a79183e21
+# ╠═665f6535-edb2-44f5-8631-8b44da8edbbd
+# ╠═549ab0f7-7071-4535-8554-3422504fc7cb
 # ╠═460c77be-7707-488a-8aa2-e954875a835c
 # ╠═2e6d029e-b34e-45cd-958f-32a9c3e72665
+# ╠═07e709d0-ae83-413f-96d8-5e10500017b7
 # ╠═21a2eb16-1eb7-4f2d-93db-b1e7c9baa821
 # ╠═0fed6f60-0499-475f-9380-f9df806f62f6
 # ╠═f89d2b1d-3176-4394-9c94-060c0966e4a2
+# ╠═831cd8bf-32b9-4ebb-a3a4-7ae627715e98
 # ╠═d4d62052-a475-46e9-b657-1a5b0b95724a
 # ╠═f00c2df6-9d0c-4c78-9095-3e41b2193587
 # ╠═95dd3903-b7c4-403f-8bd5-34df3ab775ec
 # ╠═4cbf47cd-7e14-4743-aecf-416e5d505416
-# ╠═396710e9-ae49-41e5-a09f-4ee022840474
 # ╠═d0b3f97b-d7bc-4af2-a23f-615010df6ab7
-# ╠═d553b134-51c6-403b-8415-e85c454871f5
+# ╠═c60a063e-87fc-4744-ac51-cf5a157957b5
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
